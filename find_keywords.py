@@ -1,6 +1,7 @@
 import sys,json,re,csv
 from collections import defaultdict as dd
 
+# Create the .csv file that will include the observations containing key words. Only 'text', 'coordinates', and 'created_at' are included for now.
 with open('00positives.csv', 'a') as csvfile:
     awriter = csv.writer(csvfile, delimiter='\t',
                             quotechar='"', quoting=csv.QUOTE_MINIMAL)
@@ -19,12 +20,12 @@ def count_terms(all_tweets,terms):
 				result = re.findall(word,tweet_text)
 				if result:
 					term_counts[word] += len(result) # Increment dictionary object
-					with open('00positives.csv', 'a') as csvfile:
+					with open('00positives.csv', 'a') as csvfile: # Include observation in .csv file if it contains terms
                                             awriter = csv.writer(csvfile, delimiter='\t',
                                                                  quotechar='"', quoting=csv.QUOTE_MINIMAL)
                                             awriter.writerow([tweet_text] + [a_tweet['coordinates']] + [a_tweet['created_at']])
 	for key in terms:
-		print key,term_counts[key]
+		print key,term_counts[key] # Prints the number of times the term is included in the Twitter sample
 
 
 def main():
